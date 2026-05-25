@@ -3,54 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>인터넷비즈니스론 - D팀 A/B 테스트</title>
+    <title>B팀 블로그 - A/B 테스트 제품</title>
     <style>
-        body { font-family: 'Malgun Gothic', sans-serif; background-color: #f5f6f7; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        h1 { color: #222; margin-bottom: 5px; }
-        .sub-title { color: #666; margin-bottom: 30px; font-size: 1.1em; }
-        .container { display: flex; gap: 40px; max-width: 900px; width: 100%; justify-content: center; flex-wrap: wrap; }
-        .card { background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 340px; padding: 20px; text-align: center; border: 2px solid #eee; }
-        .card.group-a { border-top: 6px solid #ff4d4d; }
-        .card.group-b { border-top: 6px solid #2ecc71; }
-        .badge { display: inline-block; padding: 6px 12px; border-radius: 20px; font-weight: bold; color: white; margin-bottom: 15px; }
-        .group-a .badge { background-color: #ff4d4d; }
-        .group-b .badge { background-color: #2ecc71; }
-        .food-img { width: 100%; border-radius: 8px; margin-bottom: 15px; }
-        .price-box { background: #fff9e6; border: 1px dashed #ffd166; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 1.05em; margin: 15px 0; }
-        .fee-text { color: #e63946; }
-        .free-text { color: #2ecc7 green; font-weight: bold; }
-        .btn { background-color: #ff5a5f; color: white; border: none; padding: 12px 0; width: 100%; border-radius: 6px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .btn:hover { background-color: #e34247; }
+        body { font-family: 'Malgun Gothic', sans-serif; background-color: #f7f7f7; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; justify-content: center; box-sizing: border-box; }
+        
+        /* Giao diện 1: Đăng nhập / Thu thập Email */
+        .login-card { background: white; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); width: 100%; max-width: 400px; padding: 30px; text-align: center; box-sizing: border-box; }
+        .pin-icon { font-size: 40px; margin-bottom: 10px; color: #ff5a5f; }
+        .login-card h2 { margin: 10px 0; color: #222; font-size: 1.6em; }
+        .login-card p { color: #666; font-size: 0.95em; line-height: 1.5; margin-bottom: 25px; }
+        .input-group { text-align: left; margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 0.85em; color: #444; font-weight: bold; margin-bottom: 5px; }
+        .input-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1em; box-sizing: border-box; background-color: #fafafa; }
+        .btn-submit { background-color: #ff5a5f; color: white; border: none; padding: 14px 0; width: 100%; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        
+        /* Giao diện 2: Trang Thử Nghiệm Nước Uống A/B (Mới) */
+        .main-test { display: none; width: 100%; max-width: 900px; flex-direction: column; align-items: center; }
+        .header-bar { color: #666; margin-bottom: 20px; font-size: 1.2em; font-weight: bold; }
+        .container { display: flex; gap: 30px; width: 100%; justify-content: center; flex-wrap: wrap; }
+        .product-card { background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); width: 360px; padding: 30px; border: 2px solid #eee; box-sizing: border-box; position: relative; }
+        .card.group-a { border-top: 6px solid #4da3ff; }
+        .card.group-b { border-top: 6px solid #ff4da3; }
+        .badge { display: inline-block; padding: 6px 12px; border-radius: 20px; font-weight: bold; color: white; margin-bottom: 20px; text-align: center; }
+        .group-a .badge { background-color: #4da3ff; }
+        .group-b .badge { background-color: #ff4da3; }
+        
+        /* Biểu tượng và mô tả sản phẩm (Giống mẫu bạn gửi) */
+        .features-container { display: flex; justify-content: space-around; gap: 10px; margin-bottom: 25px; }
+        .feature-item { flex: 1; text-align: center; }
+        .feature-icon-wrapper { display: inline-block; padding: 10px; border-radius: 50%; border: 2px solid #ddd; margin-bottom: 10px; }
+        .feature-icon { font-size: 24px; color: #333; }
+        .feature-title { font-weight: bold; font-size: 0.9em; margin-bottom: 3px; }
+        .feature-desc { color: #666; font-size: 0.75em; line-height: 1.4; }
+        
+        .price-section { text-align: center; margin-bottom: 25px; }
+        .product-info { color: #666; font-size: 0.95em; margin-bottom: 10px; }
+        .fee-label { background: #fff9e6; border: 1px dashed #ffd166; padding: 8px 12px; border-radius: 6px; color: #ff5a5f; display: inline-block; margin-bottom: 5px; font-weight: bold; }
+        .price-value { font-size: 2.8em; font-weight: bold; color: #222; }
+        .price-value::after { content: "원"; font-size: 0.5em; font-weight: bold; margin-left: 2px; }
+        
+        /* Nút Thanh toán và Biểu đồ Phần Trăm (vẫn giữ nguyên) */
+        .btn-buy { background-color: #2ecc71; color: white; border: none; padding: 16px 0; width: 100%; border-radius: 8px; font-size: 1.2em; font-weight: bold; cursor: pointer; transition: 0.2s; margin-top: 10px; text-align: center; text-decoration: none; display: flex; justify-content: center; align-items: center; }
+        .btn-buy:hover { background-color: #27ae60; }
+        .result-box { display: none; margin-top: 20px; background: #edf2f7; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 1.1em; color: #2d3748; text-align: center; }
+        .loading-text { display: none; color: #ff5a5f; font-weight: bold; margin-top: 15px; text-align: center; }
     </style>
 </head>
 <body>
 
-    <h1>배달비 표시 방식 A/B 테스트</h1>
-    <div class="sub-title">인터넷비즈니스론 - D팀 (어떤 방식이 결제율을 높일까?)</div>
-
-    <div class="container">
-        <div class="card group-a">
-            <span class="badge">A 그룹 (통제군)</span>
-            <h3>간장 양념 치킨</h3>
-            <div class="price-box">
-                15,000원 미만 주문 시<br>
-                <span class="fee-text">배달비 2,000원 부과</span>
+    <div id="loginSection" class="login-card">
+        <div class="pin-icon">📍</div>
+        <h2>A/B 테스트 참가자 등록</h2>
+        <p>B팀 블로그 제품 실험 참가를 위해 정보를 입력해주세요.</p>
+        <form onsubmit="startTest(event)">
+            <div class="input-group">
+                <label>이메일 주소 (Email)</label>
+                <input type="email" id="userEmail" placeholder="example@gmail.com" required>
             </div>
-            <p style="color:#888; font-size:0.9em;">주문금액: 13,000원</p>
-            <button class="btn" onclick="alert('A 그룹 결제 완료! (결제율 측정 완료)')">결제하기</button>
-        </div>
-
-        <div class="card group-b">
-            <span class="badge">B 그룹 (실험군)</span>
-            <h3>간장 양념 치킨</h3>
-            <div class="price-box">
-                15,000원 이상 주문하면<br>
-                <span class="free-text" style="color: #2ecc71;">★ 무료 배달 ★</span>
+            <div class="input-group">
+                <label>이름 (Name)</label>
+                <input type="text" id="userName" placeholder="홍길동" required>
             </div>
-            <p style="color:#888; font-size:0.9em;">주문금액: 13,000원 (2,000원 추가 시 무료배달)</p>
-            <button class="btn" onclick="alert('B 그룹 결제 완료! (결제율 15% 상승 효과 측정)')">결제하기</button>
-        </div>
+            <button type="submit" class="btn-submit">테스트 참여하기</button>
+        </form>
     </div>
 
+    <div id="testSection" class="main-test">
+        <div class="header-bar">bteam 님의 블로그 <span style="font-weight:normal;">/ 📍</span></div>
+        <div class="container">
+            <div class="card group-a product-card">
+                <div style="text-align: center;"><span class="badge">A안 (통제군)</span></div>
+                <div class="features-container">
+                    <div class="feature-item"><div class="feature-icon-wrapper"><span class="feature-icon">💧</span></div><div class="feature-title">순수 수분 100%</div><div class="feature-desc">깨끗하고 안전한 물</div></div>
+                    <div class="feature-item"><div class="feature-icon-wrapper"><span class="feature-icon">🛡️</span></div><div class="feature-title">철저한 품질 관리</div><div class="feature-desc">안심 품질 관리 시스템</div></div>
+                    <div class="feature-item"><div class="feature-icon-wrapper"><span class="feature-icon">⛰️</span></div><div class="feature-title">일반 미네랄 수</div><div class="feature-desc">건강한 선택</div></div>
+                </div>
+                <div class="price-section">
+                    <div class="product-info">제주 천연 암반수 500ml</div>
+                    <div class="price-value">1,900</div>
+                </div>
+                <button class="btn-buy" id="btnA" onclick="submitChoice('A')">✅ 구매 완료</button>
+                <div id="resultA" class="result-box">📊 실시간 A안 구매율: 계산 중...</div>
+            </div>
+
+            <div class="card group-b product-card">
+                <div style="text-align: center;"><span class="badge">B안 (실험군)</span></div>
+                <div class="features-container">
+                    <div class="feature-item"><div class="feature-icon-wrapper"><span class="feature-icon">💧</span></div><div class="feature-title">제주 천연 암반수 100%</div><div class="feature-desc">깨끗하고 안전한 물</div></div>
+                    <div class="feature-item"><div class="feature-icon-wrapper"><span class="feature-icon">🛡️</span></div><div class="feature-title">엄격한 품질 관리</div><div class="feature-desc">철저한 품질 관리 시스템</div></div>
+                    <div class="feature-item"><div class="feature-icon-wrapper"><span class="feature-icon">⛰️</span></div><div class="feature-title">미네랄이 풍부한 물</div><div class="feature-desc">자연이 주는 건강한 선택</div></div>
+                </div>
+                <div class="price-section">
+                    <div class="product-info">제주 천연 암반수 500ml</div>
+                    <div class="fee-label">배달비 2,000원 추가 (A/B 테스트)</div>
+                    <div class="price-value">1,900</div>
+                </div>
+                <button class="btn-buy" id="btnB" onclick="submitChoice('B')">✅ 구매 완료</button>
+                <div id="resultB" class="result-box">📊 실시간 B안 구매율: 계산 중...</div>
+            </div>
+        </div>
+        <div id="loading" class="loading-text">⏳ Google Sheets từ 실시간 데이터 집계 중...</div>
+    </div>
+
+    <script>
+        // ⚠️ DÁN LINK WEB APP CỦA BẠN VÀO GIỮA HAI DẤU NHÁY ĐƠN DƯỚI ĐÂY
+        const SCRIPT_URL = 'ĐIỀN_LINK_WEB_APP_GOOGLE_CỦA_BẠN_VÀO_ĐÂY';
+
+        let savedEmail = "";
+        let savedName = "";
+
+        function startTest(event) {
+            event.preventDefault();
+            savedEmail = document.getElementById('userEmail').value;
+            savedName = document.getElementById('userName').value;
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('testSection').style.display = 'flex';
+        }
+
+        function submitChoice(choice) {
+            // Khóa nút bấm và hiện loading
+            document.getElementById('btnA').disabled = true;
+            document.getElementById('btnB').disabled = true;
+            document.getElementById('loading').style.display = 'block';
+
+            // Gửi dữ liệu thật lên Google Sheets qua API Fetch
+            const url = `${SCRIPT_URL}?email=${encodeURIComponent(savedEmail)}&name=${encodeURIComponent(savedName)}&choice=${choice}`;
+            
+            fetch(url, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loading').style.display = 'none';
+                
+                // Cập nhật phần trăm thật từ Google Sheets trả về lên màn hình web
+                document.getElementById('resultA').innerText = `📊 실시간 A안 구매율: ${data.percentA} (총 ${data.total}명 참여)`;
+                document.getElementById('resultB').innerText = `📊 실시간 B안 구매율: ${data.percentB}`;
+                
+                // Hiện khung kết quả
+                document.getElementById('resultA').style.display = 'block';
+                document.getElementById('resultB').style.display = 'block';
+                
+                alert(`구매가 thành công! 투표 결과 데이터가 실시간 반영됩니다.`);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('데이터 전송에 실패했습니다. SCRIPT_URL을 다시 확인해주세요.');
+                document.getElementById('btnA').disabled = false;
+                document.getElementById('btnB').disabled = false;
+                document.getElementById('loading').style.display = 'none';
+            });
+        }
+    </script>
 </body>
 </html>
